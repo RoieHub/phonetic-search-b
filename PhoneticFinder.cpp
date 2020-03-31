@@ -7,277 +7,181 @@ using namespace std;
 
 namespace phonetic
 {
+
+    //find the phonatic words
     string find(string text, string word)
     {
+        //change word and text into a lower case
         string lowword = wordlowercase(word);
         string lowtext = textlowercase(text);
-        //string check = inword(text);
-        int words = numberofwords(text);
-        int size = sizestring(text);
-        int i=0;
-        int j=0;
-        int index=0;
-        string temp=text;
-        vector <string> wordy;
-        int countwords=0;
-        int prob=words;
-        string textnew = lowtext + "  ";
 
-        
-        for (i=0;i<=size;i++)
+        //define vector of strings which includ words from the text
+        vector <string> words = wordsfromt(lowtext);
+
+       int same=0;
+
+        //check if the words with the same size
+        for (int i=0;i<words.size();i++)
         {
-            if (textnew.at(i)==' ' && words!=0)
-            {
-            wordy.push_back(textnew.substr(index,(i-index)));       
-            index=i+1;
-            }
-
-            
+            same=sames(word,words[i]);
+            if (lowword.size()==words[i].size() && same>1)
+             {
+                 int check = checkequal(lowword,words[i]);
+                  if (check==0)
+                   {
+                   return words[i];
+                 }     
+             }
         }
-           while (prob>0)
-            {
-               for (j=0,i=0;j<=word.length();j++,prob--)
-               {
-                   
-                   if (problemchar(wordy[i],lowword)==true)
-                   {
-                       //cout << word << " line 44  " << endl;
-                       //cout << wordy [i] << " line 45  " << endl;
-                       //cout << " here ";
-                       //cout << " in problem char "  <<  wordy[i] << "  " << word << " " << endl;
-                       return wordy[i];
-                       i++;
-                       //cout << "here new word: " << wordy[i] << endl;
-                       
-                   }
-
-                   else if (word=="")
-                   {
-                      throw runtime_error {"The "+ word+" is invalid word"};
-                   }
-
-                   /*else if (wordy[i].size()!=lowword.size())
-                   {
-                        throw runtime_error {"The "+ word+" is invalid word"};
-                   }*/
-
-                   else
-                   {
-                      //cout << "in else: " << (wordy[i]) << "  " << (word) << " " << endl;
-                      i++;
-                      //cout << "here";
-                   }
 
 
-                   
-               }
-             
-             } 
-          
-            
-
-      return "no word";
-        
+    return "no";
     }
 
-
-
-
-    int sizestring (string text)
+    //check how many same chars betwen two strings
+    int sames (string word, string fromtext)
     {
-        int count=0;
-        int i=0;
 
-        while (text[i]) 
-        {
-        i++;
-        count++;
-        }
-
-        return count;
-         
-    
+    //return count;
     }
 
-    int numberofwords (string text)
+    //check if there are typing problem
+    int checkequal (string word, string wordtext)
     {
-        int countspaces = 0;
-        int words=0;
-        int i=0;
-        int size = sizestring(text);
-        //cout << size;
-        for (i=0;i<size;i++)
+        int count = word.size();
+        if (word==wordtext)
         {
-            if (i==0 && text.at(i)!=' ')
-            {
-                //cout << "line 64" << endl;
-                words++;
-            }
-
-            else if (text.at(i)==' ')
-            {
-                countspaces++;
-               //cout << "line 70" << endl;
-                words++;
-            }
-            
-            
+            return 0;
         }
-        
-        return words;
 
-    }
-
-
-
-
-    bool problemchar (string word, string realword)
-    {
-        
-        if (word.size()==realword.size())
+        for (int i=0;i<word.size();i++)
         {
-            int count=0;
-            for(size_t i=0;i<word.length();i++) 
+            cout << word << "  " << wordtext << "  " << word.size() << " ";
+            if (word.at(i)=='b' && (wordtext.at(i)=='b' || wordtext.at(i)=='f' || wordtext.at(i)=='p'))
             {
-            char c=word.at(i);
-            char creal=realword.at(i);
-
-            if (c==creal)
-            {
-                //return true;
-                count++;
+                count --;
             }
 
-            else if (creal=='w' && (c=='w' || c=='v'))
+            else if (word.at(i)=='f' && (wordtext.at(i)=='b' || wordtext.at(i)=='f' || wordtext.at(i)=='p'))
             {
-                //return true;
-                count++;
+                count --;
             }
 
-            else if (creal=='v' && (c=='w' || c=='v'))
+            else if (word.at(i)=='p' && (wordtext.at(i)=='b' || wordtext.at(i)=='f' || wordtext.at(i)=='p'))
             {
-                //return true;
-                count++;
+                count --;
             }
 
-            else if (creal=='g' && (c=='g' || c=='j'))
+            else if (word.at(i)=='c' && (wordtext.at(i)=='c' || wordtext.at(i)=='k' || wordtext.at(i)=='q'))
             {
-                //return true;
-                count++;
+                count --;
             }
 
-            else if (creal=='j' && (c=='g' || c=='j'))
+            else if (word.at(i)=='q' && (wordtext.at(i)=='c' || wordtext.at(i)=='k' || wordtext.at(i)=='q'))
             {
-                //return true;
-                count++;
+                count --;
             }
 
-            else if (creal=='s' && (c=='s' || c=='z'))
+            else if (word.at(i)=='k' && (wordtext.at(i)=='c' || wordtext.at(i)=='k' || wordtext.at(i)=='q'))
             {
-                //return true;
-                count++;
+                count --;
             }
 
-            else if (creal=='z' && (c=='s' || c=='z'))
+            else if (word.at(i)=='v' && (wordtext.at(i)=='v' || wordtext.at(i)=='w'))
             {
-                //return true;
-                count++;
+                count --;
             }
 
-            else if (creal=='d' && (c=='t' || c=='d'))
+            else if (word.at(i)=='w' && (wordtext.at(i)=='v' || wordtext.at(i)=='w'))
             {
-                //return true;
-                count++;
+                count --;
             }
 
-            else if (creal=='t' && (c=='t' || c=='d'))
+            else if (word.at(i)=='g' && (wordtext.at(i)=='g' || wordtext.at(i)=='j'))
             {
-                //return true;
-                count++;
+                count --;
             }
 
-            else if (creal=='o' && (c=='o' || c=='u'))
+            else if (word.at(i)=='j' && (wordtext.at(i)=='g' || wordtext.at(i)=='j'))
             {
-                //return true;
-                count++;
+                count --;
             }
 
-            else if (creal=='u' && (c=='o' || c=='u'))
+            else if (word.at(i)=='s' && (wordtext.at(i)=='s' || wordtext.at(i)=='z'))
             {
-                //return true;
-                count++;
+                count --;
             }
 
-            else if (creal=='i' && (c=='i' || c=='y'))
+            else if (word.at(i)=='z' && (wordtext.at(i)=='s' || wordtext.at(i)=='z'))
             {
-               //return true;
-                count++;
+                count --;
             }
 
-            else if (creal=='y' && (c=='i' || c=='y'))
+            else if (word.at(i)=='d' && (wordtext.at(i)=='d' || wordtext.at(i)=='t'))
             {
-                //return true;
-                count++;
+                count --;
             }
 
-            else if (creal=='b' && (c=='b' || c=='f' || c=='p'))
+            else if (word.at(i)=='t' && (wordtext.at(i)=='d' || wordtext.at(i)=='t'))
             {
-                //return true;
-                count++;
+                count --;
             }
 
-            else if (creal=='f' && (c=='b' || c=='f' || c=='p'))
+            else if (word.at(i)=='o' && (wordtext.at(i)=='o' || wordtext.at(i)=='u'))
             {
-                //return true;
-                count++;
+                count --;
             }
 
-            else if (creal=='p' && (c=='b' || c=='f' || c=='p'))
+            else if (word.at(i)=='u' && (wordtext.at(i)=='o' || wordtext.at(i)=='u'))
             {
-                //return true;
-                count++;
+                count --;
             }
 
-            else if (creal=='c' && (c=='k' || c=='q' || c=='p'))
+            else if (word.at(i)=='i' && (wordtext.at(i)=='i' || wordtext.at(i)=='y'))
             {
-                //return true;
-                count++;
+                count --;
             }
 
-            else if (creal=='k' && (c=='k' || c=='q' || c=='p'))
+            else if (word.at(i)=='y' && (wordtext.at(i)=='i' || wordtext.at(i)=='y'))
             {
-                //return true;
-                count++;
+                count --;
             }
 
-            else if (creal=='q' && (c=='k' || c=='q' || c=='p'))
-            {
-                //return true;
-                count++;
-            }
 
         }
-        if (count==word.size())
+        if (count >= 0)
         {
-            return true;
+            return 0;
         }
         else
         {
-            return false;
+            return -1;
         }
         
-        }
-        else
-        {
-            //cout << "they are diffrent words";
-            return false;
-        }
-        
-        
-        return false;
-            
+        return 2;
     }
 
+
+
+   //take words from the text
+   vector <string> wordsfromt (string text)
+   {
+       int index=0;
+       int i=0;
+       vector <string> wordsfromtext;
+       for (int i=0;i<text.size();i++)
+       {
+           if (text.at(i)==' ')
+           {
+               wordsfromtext.push_back(text.substr(index,(i-index)));
+               index=i+1;
+           }
+       }
+       return wordsfromtext;
+   }
+
+
+    //change word into lowercase
     string wordlowercase(string word)
     {
        for(size_t i=0;i<word.length();i++) 
@@ -289,7 +193,7 @@ namespace phonetic
         
     }
 
-
+    //change text into lower case
     string textlowercase(string text)
     {
         string tempText=text;
@@ -302,9 +206,4 @@ namespace phonetic
         
     }
 
-    bool notin (string text,string word)
-    {
-        return false;
-    }
-   
 }
