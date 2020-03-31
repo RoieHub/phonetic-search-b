@@ -56,6 +56,11 @@ namespace phonetic
                       throw runtime_error {"The "+ word+" is invalid word"};
                    }
 
+                   /*else if (wordy[i].size()!=lowword.size())
+                   {
+                        throw runtime_error {"The "+ word+" is invalid word"};
+                   }*/
+
                    else
                    {
                       //cout << "in else: " << (wordy[i]) << "  " << (word) << " " << endl;
@@ -128,112 +133,148 @@ namespace phonetic
 
     bool problemchar (string word, string realword)
     {
-        for(size_t i=0;i<word.length();i++) 
+        
+        if (word.size()==realword.size())
         {
+            int count=0;
+            for(size_t i=0;i<word.length();i++) 
+            {
             char c=word.at(i);
             char creal=realword.at(i);
 
             if (c==creal)
             {
-                return true;
+                //return true;
+                count++;
             }
 
             else if (creal=='w' && (c=='w' || c=='v'))
             {
-                return true;
+                //return true;
+                count++;
             }
 
             else if (creal=='v' && (c=='w' || c=='v'))
             {
-                return true;
+                //return true;
+                count++;
             }
 
             else if (creal=='g' && (c=='g' || c=='j'))
             {
-                return true;
+                //return true;
+                count++;
             }
 
             else if (creal=='j' && (c=='g' || c=='j'))
             {
-                return true;
+                //return true;
+                count++;
             }
 
             else if (creal=='s' && (c=='s' || c=='z'))
             {
-                return true;
+                //return true;
+                count++;
             }
 
             else if (creal=='z' && (c=='s' || c=='z'))
             {
-                return true;
+                //return true;
+                count++;
             }
 
             else if (creal=='d' && (c=='t' || c=='d'))
             {
-                return true;
+                //return true;
+                count++;
             }
 
             else if (creal=='t' && (c=='t' || c=='d'))
             {
-                return true;
+                //return true;
+                count++;
             }
 
             else if (creal=='o' && (c=='o' || c=='u'))
             {
-                return true;
+                //return true;
+                count++;
             }
 
             else if (creal=='u' && (c=='o' || c=='u'))
             {
-                return true;
+                //return true;
+                count++;
             }
 
             else if (creal=='i' && (c=='i' || c=='y'))
             {
-                return true;
+               //return true;
+                count++;
             }
 
             else if (creal=='y' && (c=='i' || c=='y'))
             {
-                return true;
+                //return true;
+                count++;
             }
 
             else if (creal=='b' && (c=='b' || c=='f' || c=='p'))
             {
-                return true;
+                //return true;
+                count++;
             }
 
             else if (creal=='f' && (c=='b' || c=='f' || c=='p'))
             {
-                return true;
+                //return true;
+                count++;
             }
 
             else if (creal=='p' && (c=='b' || c=='f' || c=='p'))
             {
-                return true;
+                //return true;
+                count++;
             }
 
             else if (creal=='c' && (c=='k' || c=='q' || c=='p'))
             {
-                return true;
+                //return true;
+                count++;
             }
 
             else if (creal=='k' && (c=='k' || c=='q' || c=='p'))
             {
-                return true;
+                //return true;
+                count++;
             }
 
             else if (creal=='q' && (c=='k' || c=='q' || c=='p'))
             {
-                return true;
+                //return true;
+                count++;
             }
 
-            else
-            {
-                return false;
-            }
         }
-        return true;
+        if (count==word.size())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        
+        }
+        else
+        {
+            //cout << "they are diffrent words";
+            return false;
+        }
+        
+        
+        return false;
             
     }
 
