@@ -12,6 +12,8 @@ namespace phonetic
     string textlowercase(string text);
     vector <string> wordsfromt (string text);
     int checkequal (string word, string wordtext);
-    int sames (string word, string fromtext);
+    int checkequal (char word, char wordtext);
+    bool same(string word,string wordtext);
+
     
 }
