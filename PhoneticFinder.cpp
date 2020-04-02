@@ -11,9 +11,17 @@ namespace phonetic
 //find the phonatic words
 string find(string text, string word)
 {
+    
+    if (word.length() == 0) // Check empty text
+    {
+        string errorMessage1 = string("No words found in text");
+        throw runtime_error(errorMessage1);
+    }
+
     //change word and text into a lower case for convinions
     string originalWord = word;
     string lowword = wordlowercase(word);
+    //cout << "this is the low :" << lowword << "  and this is original : "<< word << endl;
     text = text + ' '; // Added delimiter for partition.
 
     // Init vector of strings , which are words from the text
@@ -24,8 +32,8 @@ string find(string text, string word)
 
     if (numOfWords == 0) // Check empty text
     {
-        string errorMessage = string("No words found in text");
-        throw runtime_error(errorMessage);
+        string errorMessage2 = string("No words found in text");
+        throw runtime_error(errorMessage2);
     }
 
     // Check if any word in my txt match
@@ -38,7 +46,7 @@ string find(string text, string word)
           if( match == 0 ) // wordFound
           {
               found = true;
-              cout << "Found the word "<<wordsArray[i] << endl;
+              //cout << "Found the word "<<wordsArray[i] << endl;
                 return wordsArray[i];
           }      
         }
@@ -47,8 +55,8 @@ string find(string text, string word)
 
     if (!found)
     {
-        string errorMessage = string("Did not find the word ") + word + (" in the text");
-        throw runtime_error(errorMessage);
+        string errorMessage3 = string("Did not find the word ") + word + (" in the text");
+        throw runtime_error(errorMessage3);
     }
 
     return "no";
@@ -350,8 +358,9 @@ char asciitolower(char in)
  **/
 bool upLowCaseCheck(char wrdChar, char curr)
 {
+    //cout << "wrdChar = "<< wrdChar <<" and curr is = "<< curr << endl;
     return (curr == wrdChar || // Lower case
-           (curr - 32) == wrdChar); // Upper case
+           (curr + 32) == wrdChar); // Upper case
 }
 /**
  * lword: A lower case version of the word typed to search , all char must be lowercase english alphabet.
@@ -397,6 +406,7 @@ int checkWord(string lword, string curr)
             break;
 
         case 'h':
+            cout<< "this is lword = " << lword << " this is curr" << curr <<" ,this is curr["<<i<<"] = "<< curr[i] << endl;
             mistakeFound = (!upLowCaseCheck('h', curr[i]));
             break;
 
@@ -453,7 +463,7 @@ int checkWord(string lword, string curr)
             break;
 
         case 'k':
-            mistakeFound = (!upLowCaseCheck('k', curr[i]));
+            mistakeFound = (!phonetic::matchCKQ(curr[i]));
             break;
 
         case 'j':
