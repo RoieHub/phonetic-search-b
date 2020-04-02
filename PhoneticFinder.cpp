@@ -8,7 +8,15 @@ using namespace std;
 namespace phonetic
 {
 
-//find the phonatic words
+/**
+ * @param text : string type text, ,must contain only english alphabet and whitespaces (otherwise undefined) , throws exception if empty .
+ * @param word : string type word , must contain only english alphabet and whitespaces (otherwise throws exeption) , that is to be found in the text,throws exception if empty.
+ * This function finds the first occurrence of a given "word" in a given "text" , and return it as is from the text. 
+ * The function is not case sensetive.
+ * The function allows certian typos being made in the text , as described in the assingment:
+ *  https://github.com/RoieJinx/phonetic-search-a/blob/master/README.md
+ * @return : returns a string , which is the first
+ */
 string find(string text, string word)
 {
     
@@ -18,42 +26,40 @@ string find(string text, string word)
         throw runtime_error(errorMessage1);
     }
 
-    //change word and text into a lower case for convinions
+    // Change word and text into a lower case for convinions
     string originalWord = word;
     string lowword = wordlowercase(word);
-    //cout << "this is the low :" << lowword << "  and this is original : "<< word << endl;
     text = text + ' '; // Added delimiter for partition.
 
-    // Init vector of strings , which are words from the text
-    bool found = false;
-    vector<string> wordsArray = wordsfromt(text);
+    // Init vector of strings , which are words from the text.
+    vector<string> wordsArray = wordsfromt(text); 
     int numOfWords = wordsArray.size();
-    //cout << "this is :" << word << "  ";
-
     if (numOfWords == 0) // Check empty text
     {
         string errorMessage2 = string("No words found in text");
         throw runtime_error(errorMessage2);
     }
+    bool found = false; // For match found use.
 
     // Check if any word in my txt match
     for (int i = 0; i < numOfWords ; i++)
     { 
-        // Do the check only on words with matching size
+        // Check only on words with matching size
         if(lowword.length() == wordsArray[i].length())
         {
           int match = checkWord(lowword,wordsArray[i]);
-          if( match == 0 ) // wordFound
+          if( match == 0 ) // wordFound!
           {
               found = true;
               //cout << "Found the word "<<wordsArray[i] << endl;
                 return wordsArray[i];
-          }      
+          } 
+               
         }
         
     }
 
-    if (!found)
+    if (!found) // if no word was found !
     {
         string errorMessage3 = string("Did not find the word ") + word + (" in the text");
         throw runtime_error(errorMessage3);
@@ -62,172 +68,16 @@ string find(string text, string word)
     return "no";
 }
 
-//check how many same chars betwen two strings
-bool same(string word, string wordtext)
-{
-    int i = 0;
-    int count = 0;
-    int check = 0;
-    if (word.size() == wordtext.size())
-    {
-        for (i = 0; i < word.size(); i++)
-        {
-            check = checkequal((word.at(i)), (wordtext.at(i)));
-            if (check == 0)
-            {
-                count++;
-            }
-        }
 
-        if (count >= (word.size() - 2))
-        {
-            return true;
-        }
 
-        else if (word.size() == 2)
-        {
-            check = checkequal(word, wordtext);
-            if (check == 0)
-            {
-                return true;
-            }
-        }
-    }
-    else
-    {
-        return false;
-    }
-    return false;
-}
 
-//check if there are typing problem
-int checkequal(string word, string wordtext)
-{
-    int count = word.size();
-    if (word == wordtext)
-    {
-        return 0;
-    }
 
-    for (int i = 0; i < word.size(); i++)
-    {
-        //cout << word << "  " << wordtext << "  " << word.size() << " ";
-        if (word.at(i) == 'b' && (wordtext.at(i) == 'b' || wordtext.at(i) == 'f' || wordtext.at(i) == 'p'))
-        {
-            count--;
-        }
 
-        else if (word.at(i) == 'f' && (wordtext.at(i) == 'b' || wordtext.at(i) == 'f' || wordtext.at(i) == 'p'))
-        {
-            count--;
-        }
-
-        else if (word.at(i) == 'p' && (wordtext.at(i) == 'b' || wordtext.at(i) == 'f' || wordtext.at(i) == 'p'))
-        {
-            count--;
-        }
-
-        else if (word.at(i) == 'c' && (wordtext.at(i) == 'c' || wordtext.at(i) == 'k' || wordtext.at(i) == 'q'))
-        {
-            count--;
-        }
-
-        else if (word.at(i) == 'q' && (wordtext.at(i) == 'c' || wordtext.at(i) == 'k' || wordtext.at(i) == 'q'))
-        {
-            count--;
-        }
-
-        else if (word.at(i) == 'k' && (wordtext.at(i) == 'c' || wordtext.at(i) == 'k' || wordtext.at(i) == 'q'))
-        {
-            count--;
-        }
-
-        else if (word.at(i) == 'v' && (wordtext.at(i) == 'v' || wordtext.at(i) == 'w'))
-        {
-            count--;
-        }
-
-        else if (word.at(i) == 'w' && (wordtext.at(i) == 'v' || wordtext.at(i) == 'w'))
-        {
-            count--;
-        }
-
-        else if (word.at(i) == 'g' && (wordtext.at(i) == 'g' || wordtext.at(i) == 'j'))
-        {
-            count--;
-        }
-
-        else if (word.at(i) == 'j' && (wordtext.at(i) == 'g' || wordtext.at(i) == 'j'))
-        {
-            count--;
-        }
-
-        else if (word.at(i) == 's' && (wordtext.at(i) == 's' || wordtext.at(i) == 'z'))
-        {
-            count--;
-        }
-
-        else if (word.at(i) == 'z' && (wordtext.at(i) == 's' || wordtext.at(i) == 'z'))
-        {
-            count--;
-        }
-
-        else if (word.at(i) == 'd' && (wordtext.at(i) == 'd' || wordtext.at(i) == 't'))
-        {
-            count--;
-        }
-
-        else if (word.at(i) == 't' && (wordtext.at(i) == 'd' || wordtext.at(i) == 't'))
-        {
-            count--;
-        }
-
-        else if (word.at(i) == 'o' && (wordtext.at(i) == 'o' || wordtext.at(i) == 'u'))
-        {
-            count--;
-        }
-
-        else if (word.at(i) == 'u' && (wordtext.at(i) == 'o' || wordtext.at(i) == 'u'))
-        {
-            count--;
-        }
-
-        else if (word.at(i) == 'i' && (wordtext.at(i) == 'i' || wordtext.at(i) == 'y'))
-        {
-            count--;
-        }
-
-        else if (word.at(i) == 'y' && (wordtext.at(i) == 'i' || wordtext.at(i) == 'y'))
-        {
-            count--;
-        }
-    }
-    if (count >= 0)
-    {
-        return 0;
-    }
-    else
-    {
-        return -1;
-    }
-
-    return 2;
-}
-
-//check if there are typing problems in chars
-int checkequal(char word, char wordtext)
-{
-    if (word == wordtext)
-    {
-        return 0;
-    }
-    else
-    {
-        return 1;
-    }
-}
-
-//take words from the text
+/**
+ * @param text :string.
+ * This method will split the text by the delimiter whitespace " " , and store the separeted words in a vector
+ * @return vector<string> : made by 
+ */
 vector<string> wordsfromt(string text)
 {
     int index = 0;
@@ -241,11 +91,14 @@ vector<string> wordsfromt(string text)
             index = i + 1;
         }
     }
-    //cout << wordsfromtext.size();
     return wordsfromtext;
 }
 
-//change word into lowercase
+/**
+ * @param word : string representing a word , only english alphabet allowed!
+ * This method turns any uppercase char to lowercase contained in the string "word"
+ * @return string with only lowercase chars
+ */
 string wordlowercase(string word)
 {
     for (size_t i = 0; i < word.length(); i++)
@@ -351,10 +204,11 @@ char asciitolower(char in)
 }
 
 /**
+ *@param wrdChar : A char from the  word we are looking for, !must be lower Case! , otherwise undefined.
+ *@param curr: A char that can be lower case or upper case.
  * This is a helper method to define if two given chars are equal ,  regardless if "curr" is lower or upper case.
- * Returning true only if curr is lower case or upper case version of wrdChar , otherwise false.
- * wrdChar : A char from the  word we are looking for, !must be lower Case! , otherwise undefined.
- * curr: A char that can be lower case or upper case.
+ * @return : Returning true only if curr is lower case or upper case version of wrdChar , otherwise false.
+ 
  **/
 bool upLowCaseCheck(char wrdChar, char curr)
 {
@@ -363,11 +217,12 @@ bool upLowCaseCheck(char wrdChar, char curr)
            (curr + 32) == wrdChar); // Upper case
 }
 /**
- * lword: A lower case version of the word typed to search , all char must be lowercase english alphabet.
- * curr : the current word that is checked to be equal to "lword".
- * This method match the "word" , and "curr" by the rules of the assigment
+ * @param lword: A lower case version of the word typed to search , all char must be lowercase english alphabet.
+ * @param curr : the current word that is checked to be equal to "lword".
+ * This method match the "word" , and "curr" by the rules of the assigment as described in the link
+ * https://github.com/RoieJinx/phonetic-search-a/blob/master/README.md
  * ! word & curr assumed to be the same length! - Otherwise undefined 
- * return: 0 if the word match , otherwise -1;
+ * @return: 0 if the word match , otherwise -1;
  * */
 
 int checkWord(string lword, string curr)
@@ -483,8 +338,10 @@ int checkWord(string lword, string curr)
             break;
 
         default:
+        string errorMessage3 = string("ERR:Illigal char '") +lword[i] + ("' in the word");
+        throw runtime_error(errorMessage3);
             mistakeFound = true;
-            cout << " could not match the charecter : " << lword[i] << endl;
+            cout << " Illigal char! : " << lword[i] << endl;
             break;
         }
     }
@@ -496,4 +353,4 @@ int checkWord(string lword, string curr)
     }
 }
 
-} // namespace phonetic
+} 
