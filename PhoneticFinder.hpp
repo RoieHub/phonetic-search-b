@@ -14,6 +14,18 @@ namespace phonetic
     int checkequal (string word, string wordtext);
     int checkequal (char word, char wordtext);
     bool same(string word,string wordtext);
+    // Helper typo programs 
+	bool matchVW(char compared );
+	bool matchSZ(char compared );
+	bool matchBFP(char compared);
+	bool matchCKQ(char compared);
+	bool matchDT(char compared );
+	bool matchIY(char compared );
+	bool matchOU(char compared );
+	bool matchGJ(char compared );
+    char asciitolower(char in);
+    bool upLowCaseCheck(char wrdChar, char curr);
+    int checkWord(string lword, string curr);
 
     
 }
